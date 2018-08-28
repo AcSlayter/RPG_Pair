@@ -1,0 +1,6 @@
+body{
+	background: url("backgrounds/forest.png");
+}
+#sprite-container-1{
+	position:relative;
+}
