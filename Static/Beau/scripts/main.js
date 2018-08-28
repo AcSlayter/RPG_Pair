@@ -26,7 +26,7 @@ class Sprite {
 		this.context.clearRect(0,0,this.width,this.height)
 		this.context.drawImage(
 				this.image,
-				this.frameIndex*(this.width-7),
+				this.frameIndex*(this.width),
 				0,
 				this.width,
 				this.height,
@@ -54,7 +54,7 @@ class Sprite {
 
 
 
-var testSprite = new Sprite(265,290,"sprite-container-1","spritesheets/example2.png")
+var testSprite = new Sprite(258,290,"sprite-container-1","spritesheets/example2.png")
 testSprite.animate()
 
 
