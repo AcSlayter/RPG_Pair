@@ -1,4 +1,4 @@
-frameRate = 100
+frameRate = 50
 bgHeight = 500
 bgWidth = 500
 class Sprite {
@@ -20,6 +20,8 @@ class Sprite {
 		this.x = 0
 		this.y = 0
 		
+		this.spriteSheetRow = 0
+		
 		this.image.src = imageFilepath
 		var me = this
 		this.image.onload = function(){
@@ -37,7 +39,7 @@ class Sprite {
 		this.context.drawImage(
 				this.image,
 				this.frameIndex*(this.width),
-				0,
+				this.spriteSheetRow*this.height,
 				this.width,
 				this.height,
 				0,
@@ -49,7 +51,9 @@ class Sprite {
 	}
 	animate(){
 		var me = this
-		setInterval(function(){
+		me.render()
+		clearInterval(me.animation)
+		this.animation = setInterval(function(){
 			if (me.frameIndex==me.frameLimit){
 				me.frameIndex = 0
 			}
@@ -57,47 +61,82 @@ class Sprite {
 			me.frameIndex++
 		},frameRate)
 	}
+	stopAnimation(){
+		clearInterval(this.animation)
+	}
+	moveHeld(dir,mod){
+		var me = this
+		me.movement = setInterval(function(){
+			me.move(dir,mod)
+		},frameRate)
+	}
+	stopMove(){
+		clearInterval(this.movement)
+	}
 	move(dir,mod){
-		if (dir=="s"){
+		if (dir=="S"){
 			var y = this.y+mod
 			if ( y < bgHeight ){
 				this.y= y
+				this.spriteSheetRow=0
 				this.container.style.top = this.y+"px"
 			}
 		}
-		if (dir=="w"){
+		else if (dir=="W"){
 			var y = this.y-mod
 			if ( y > 0 ){
 				this.y= y
+				this.spriteSheetRow=1
 				this.container.style.top = this.y+"px"
 			}
 		}
-		if (dir=="a"){
+		else if (dir=="A"){
 			var x = this.x-mod
 			if (x > 0){
 				this.x= x
+				this.spriteSheetRow=2
 				this.container.style.left = this.x+"px"
 			}
 		}
-		if (dir=="d"){
+		else if (dir=="D"){
 			var x = this.x+mod
 			if (x < bgWidth){
-				this.x= this.x+mod
+				this.x= x
+				this.spriteSheetRow=3
 				this.container.style.left = this.x+"px"
 			}
 		}
+		
 	}
 	
 }
 
 
-var testSprite = new Sprite(258,290,"sprite-container-1","spritesheets/example2.png")
-testSprite.animate()
-$(document).keypress(function(event){
+var testSprite = new Sprite(150,120,"sprite-container-1","spritesheets/example3.png")
+keySet = new Set()
+$(document).keydown(function(event){
 	var key = String.fromCharCode(event.which)
-	console.log(key)
-	testSprite.move(key,10)
+	if (!keySet.has(key)){
+		
+		keySet.add(key)
+		testSprite.animate()
+		testSprite.moveHeld(key,10)
+	}
+	
+	
 })
+$(document).keyup(function(event){
+	var key = String.fromCharCode(event.which)
+	if (keySet.has(key)){
+		
+		testSprite.stopAnimation()
+		testSprite.stopMove()
+	}
+	keySet.delete(key)
+})
+
+
+
 
 
 
