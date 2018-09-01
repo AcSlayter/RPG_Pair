@@ -4,5 +4,8 @@ body{
 	*/
 }
 #sprite-container-1{
-	position:relative;
+	position:absolute;
+}
+#sprite-container-2{
+	position:absolute;
 }
