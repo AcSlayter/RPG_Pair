@@ -1,15 +1,15 @@
-define("sprites/MovableSprite",["sprites/Sprite","Conductor"],function(Sprite,Conductor){
+define("sprites/MovableSprite",["sprites/Sprite","Conductor", "Config"],function(Sprite,Conductor,Config){
 	
 	return class MovableSprite extends Sprite{
 		constructor(width,height,containerId,spritesheet){
 			super(width,height,containerId,spritesheet)
-			this.movement = []
+			this.movement = [];
 		}
 		moveHeld(dir,mod){
 			var me = this
 			me.movement[dir] = setInterval(function(){
 				me.move(dir,mod)
-			},frameRate)
+			},this.frameRate)
 		}
 		stopMove(dir){
 			clearInterval(this.movement[dir])
@@ -22,7 +22,7 @@ define("sprites/MovableSprite",["sprites/Sprite","Conductor"],function(Sprite,Co
 			var revert = {xOld:this.x,yOld:this.y}
 			if (dir==this.spriteSheet.facingDict[0]){
 				var y = this.y+mod
-				if ( y < bgHeight ){
+				if ( y < Config.bgHeight ){
 					this.setYPos(y)
 				}
 			}
@@ -40,7 +40,7 @@ define("sprites/MovableSprite",["sprites/Sprite","Conductor"],function(Sprite,Co
 			}
 			else if (dir==this.spriteSheet.facingDict[3]){
 				var x = this.x+mod
-				if (x < bgWidth){
+				if (x < Config.bgWidth){
 					this.setXPos(x)
 				}
 			}

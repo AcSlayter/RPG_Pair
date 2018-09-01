@@ -1,4 +1,4 @@
-define("sprites/Sprite",["sprites/Spritesheet"],function(Spritesheet){
+define("sprites/Sprite",["sprites/Spritesheet","Config"],function(Spritesheet, Config){
 
 	return class Sprite {
 		constructor(width,height,containerId,spritesheet){
@@ -25,7 +25,7 @@ define("sprites/Sprite",["sprites/Spritesheet"],function(Spritesheet){
 			this.width = width
 			this.height = height
 			this.calcExtrema()
-			this.frameRate = frameRate
+			this.frameRate = Config.frameRate
 		}
 		teleport(x,y){
 			if (x != null){
@@ -61,7 +61,7 @@ define("sprites/Sprite",["sprites/Spritesheet"],function(Spritesheet){
 				}
 				me.render()
 				me.spriteSheet.frameIndex++
-			},frameRate)
+			},this.frameRate)
 		}
 		stopAnimate(){
 			clearInterval(this.animation)
