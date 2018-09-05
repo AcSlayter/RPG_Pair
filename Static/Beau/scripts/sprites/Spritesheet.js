@@ -10,8 +10,8 @@ define("sprites/Spritesheet",function(){
 		//frameLimit
 		//frameMap
 		//frameMapIndex
-		//collisionX
-		//collisionY
+		//collisionModX
+		//collisionModY
 		//collisionWidth
 		//collisionHeight
 		constructor(spriteSheetToLoad){
@@ -53,7 +53,7 @@ define("sprites/Spritesheet",function(){
 			this.frameHeight = 120
 			this.frameIndex = 0
 			this.frameLimit = 6
-			this.collisionModX = 25
+			this.collisionModX = 27
 			this.collisionModY=25
 			this.collisionWidth = 70
 			this.collisionHeight = 70
@@ -82,8 +82,8 @@ define("sprites/Spritesheet",function(){
 			this.frameHeight = 64
 			this.frameIndex = 0
 			this.frameLimit = 2
-			this.collisionModX = 0
-			this.collisionModY=0
+			this.collisionModX = 4
+			this.collisionModY=4
 			this.collisionWidth = 50
 			this.collisionHeight = 50
 		}

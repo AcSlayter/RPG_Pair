@@ -22,7 +22,7 @@ define("sprites/MovableSprite",["sprites/Sprite","Conductor", "Config"],function
 		}
 		move(dir,mod){
 			var revert = {xOld:this.x,yOld:this.y}
-			if (this.hasFacing==true){
+			if (this.spriteSheet.hasFacing==true){
 				this._moveWithFacing(dir,mod)
 			}
 			else{
