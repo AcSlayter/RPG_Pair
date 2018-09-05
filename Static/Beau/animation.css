@@ -1,11 +1,14 @@
 body{
 	/*
-	background: url("backgrounds/forest.png");
+	background: url("backgrounds/tileset/asphalt/asfault_1.jpg");
 	*/
 }
 #sprite-container-1{
-	position:absolute;
+	position:fixed;
 }
 #sprite-container-2{
-	position:absolute;
+	position:fixed;
+}
+#sprite-container-3{
+	position:fixed;
 }

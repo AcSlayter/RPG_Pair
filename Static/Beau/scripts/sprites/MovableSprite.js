@@ -1,8 +1,10 @@
 define("sprites/MovableSprite",["sprites/Sprite","Conductor", "Config"],function(Sprite,Conductor,Config){
+	var movement
 	
 	return class MovableSprite extends Sprite{
-		constructor(width,height,containerId,spritesheet){
-			super(width,height,containerId,spritesheet)
+		//movement
+		constructor(containerId,spritesheet){
+			super(containerId,spritesheet)
 			this.movement = [];
 		}
 		moveHeld(dir,mod){
@@ -20,38 +22,77 @@ define("sprites/MovableSprite",["sprites/Sprite","Conductor", "Config"],function
 		}
 		move(dir,mod){
 			var revert = {xOld:this.x,yOld:this.y}
+			if (this.hasFacing==true){
+				this._moveWithFacing(dir,mod)
+			}
+			else{
+				this._moveWithoutFacing(dir,mod)
+			}
+
+			this._calcExtrema()
+			if (Conductor.hasCollision(this)){
+				this._setXPos(revert.xOld)
+				this._setYPos(revert.yOld)
+			}
+			if (Config.debug == true){
+				this._calcExtrema()
+			}
+			
+		}
+		//These two are the same for now...
+		_moveWithoutFacing(dir,mod){
 			if (dir==this.spriteSheet.facingDict[0]){
 				var y = this.y+mod
 				if ( y < Config.bgHeight ){
-					this.setYPos(y)
+					this._setYPos(y)
 				}
 			}
 			else if (dir==this.spriteSheet.facingDict[1]){
 				var y = this.y-mod
 				if ( y > 0 ){
-					this.setYPos(y)
+					this._setYPos(y)
 				}
 			}
 			else if (dir==this.spriteSheet.facingDict[2]){
 				var x = this.x-mod
 				if (x > 0){
-					this.setXPos(x)
+					this._setXPos(x)
 				}
 			}
 			else if (dir==this.spriteSheet.facingDict[3]){
 				var x = this.x+mod
 				if (x < Config.bgWidth){
-					this.setXPos(x)
+					this._setXPos(x)
 				}
 			}
-			this.calcExtrema()
-			if (Conductor.hasCollision(this)){
-				this.setXPos(revert.xOld)
-				this.setYPos(revert.yOld)
-			}
-			
 		}
-		handleKeyPress(){
+		_moveWithFacing(dir,mod){
+			if (dir==this.spriteSheet.facingDict[0]){
+				var y = this.y+mod
+				if ( y < Config.bgHeight ){
+					this._setYPos(y)
+				}
+			}
+			else if (dir==this.spriteSheet.facingDict[1]){
+				var y = this.y-mod
+				if ( y > 0 ){
+					this._setYPos(y)
+				}
+			}
+			else if (dir==this.spriteSheet.facingDict[2]){
+				var x = this.x-mod
+				if (x > 0){
+					this._setXPos(x)
+				}
+			}
+			else if (dir==this.spriteSheet.facingDict[3]){
+				var x = this.x+mod
+				if (x < Config.bgWidth){
+					this._setXPos(x)
+				}
+			}
+		}
+		_handleKeyPress(){
 			var me = this
 			
 			me.keySet = new Set()
@@ -67,7 +108,7 @@ define("sprites/MovableSprite",["sprites/Sprite","Conductor", "Config"],function
 					}
 				}
 				
-				console.log("Press",key)
+				//console.log("Press",key)
 				
 				
 			})
@@ -88,16 +129,17 @@ define("sprites/MovableSprite",["sprites/Sprite","Conductor", "Config"],function
 					}
 				}
 				
-				console.log("Release",key)
+				//console.log("Release",key)
 				
 			})
 		}
 		spawn(x,y){
 			this.teleport(x,y)
-			this.loadImage()
-			this.handleKeyPress()
+			this._loadImage()
+			this._handleKeyPress()
 			
 		}
 	}
+
 	
 })

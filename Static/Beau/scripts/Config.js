@@ -1,14 +1,16 @@
 define (function(){
 
     var pFrameRate = 50,
-        pbgHeight = 500,
-           pbgWidth = 500,
-           psprites = [];
+        pbgHeight = 5000,
+           pbgWidth = 5000,
+           psprites = [],
+           pdebug = true;
 
     return {
            frameRate: pFrameRate,
            bgHeight : pbgHeight,
-           bgWidth : pbgWidth
+           bgWidth : pbgWidth,
+           debug: pdebug
 
     };
 });
