@@ -10,53 +10,58 @@ define("sprites/Sprite",["sprites/Spritesheet","Config"],function(Spritesheet, C
 		//width
 		//height
 		//frameRate
+		//InteractionComponent
+		//extrema
+		//isPlayer
 		constructor(containerId,spritesheet){
 			//initialize sprite
-			this.spriteSheet = spritesheet
-
+			this.spriteSheet = spritesheet;
+			this.isPlayer = false;
+			this.InteractionComponent;
+			this.DialogueComponent;
 			
 			//initialize containing elements
-			this.container = document.getElementById(containerId)
-			this.canvas = document.createElement("canvas")
-			this.context = this.canvas.getContext("2d")
+			this.container = document.getElementById(containerId);
+			this.canvas = document.createElement("canvas");
+			this.context = this.canvas.getContext("2d");
 			this.container.style.width = this.spriteSheet.frameWidth+"px";
 			this.container.style.height = this.spriteSheet.frameHeight+"px";
 			this.canvas.width = this.spriteSheet.frameWidth;
 			this.canvas.height = this.spriteSheet.frameHeight;
-			this.container.style.position = "fixed"
-			this.container.appendChild(this.canvas)
+			this.container.style.position = "fixed";
+			this.container.appendChild(this.canvas);
 
 
-			//initialize some variables
-			this.isLoaded = false
-			this.collision = true
-			this.x = 0
-			this.y = 0
+			//initialize helper variables
+			this.isLoaded = false;
+			this.collision = true;
+			this.x = 0;
+			this.y = 0;
 			if (Config.debug==true){
-				this.outline = document.createElement("div")
-				this.outline.style.position = "fixed"
-				this.outline.style.border = "3px solid black"
-				this.outline.zIndex = "9999"
+				this.outline = document.createElement("div");
+				this.outline.style.position = "fixed";
+				this.outline.style.border = "3px solid black";
+				this.outline.zIndex = "9999";
 				
 			}
-			this._calcExtrema()
+			this._calcExtrema();
 			if (Config.debug==true){
-				this.container.appendChild(this.outline)
+				this.container.appendChild(this.outline);
 			}
 
-			this.frameRate = Config.frameRate
+			this.frameRate = Config.frameRate;
 		}
 		teleport(x,y){
 			if (x != null){
-				this._setXPos(x)
+				this._setXPos(x);
 			}
 			if (y != null){
-				this._setYPos(y)
+				this._setYPos(y);
 			}
-			this._calcExtrema()
+			this._calcExtrema();
 		}
 		render(){
-			this.context.clearRect(0,0,this.spriteSheet.frameWidth,this.spriteSheet.frameHeight)
+			this.context.clearRect(0,0,this.spriteSheet.frameWidth,this.spriteSheet.frameHeight);
 			this.context.drawImage(
 					this.spriteSheet.image,
 					this.spriteSheet.frameIndex*(this.spriteSheet.frameWidth),
@@ -67,22 +72,28 @@ define("sprites/Sprite",["sprites/Spritesheet","Config"],function(Spritesheet, C
 					0,
 					this.spriteSheet.frameWidth,
 					this.spriteSheet.frameHeight
-			)
+			);
 			
 		}
+		animateOneFrame(){
+			clearInterval(this.animation);
+			this.spriteSheet.checkResetFrame();
+			this.spriteSheet.iterateFrame();
+			this.render();
+		}
 		animate(){
-			var me = this
-			me.render()
-			clearInterval(me.animation)
+			var me = this;
+			me.render();
+			clearInterval(me.animation);
 			this.animation = setInterval(function(){
 				
-				me.spriteSheet.checkResetFrame()
-				me.render()
-				me.spriteSheet.iterateFrame()
+				me.spriteSheet.checkResetFrame();
+				me.render();
+				me.spriteSheet.iterateFrame();
 			},this.frameRate)
 		}
 		stopAnimate(){
-			clearInterval(this.animation)
+			clearInterval(this.animation);
 		}
 		_calcExtrema(){
 			this.extrema = {
@@ -92,10 +103,10 @@ define("sprites/Sprite",["sprites/Spritesheet","Config"],function(Spritesheet, C
 					"maxY":(this.y+this.spriteSheet.collisionModY)+(this.spriteSheet.collisionHeight)
 			}
 			if (Config.debug == true){
-				this.outline.style.width = (this.extrema.maxX-this.extrema.minX) +"px"
-				this.outline.style.height = (this.extrema.maxY-this.extrema.minY) +"px"
-				this.outline.style.top = this.extrema.minY +"px"
-				this.outline.style.left = this.extrema.minX +"px"
+				this.outline.style.width = (this.extrema.maxX-this.extrema.minX) +"px";
+				this.outline.style.height = (this.extrema.maxY-this.extrema.minY) +"px";
+				this.outline.style.top = this.extrema.minY +"px";
+				this.outline.style.left = this.extrema.minX +"px";
 			}
 		}
 		_setXPos(x){

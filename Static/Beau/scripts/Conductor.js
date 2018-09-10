@@ -3,12 +3,10 @@
 define("Conductor",["Config"],function(Config){
 	var sprites = []
 	return {
-		sprites,
 		addSprite: function(sprite){
 			sprites.push(sprite)
 		},
-		hasCollision: function(sprite){
-
+		hasNear: function(sprite,restrictFunction,modMaxX,modMaxY,modMinX,modMinY){
 			for (i=0;i<sprites.length;i++){
 				var xBad = false
 				var yBad = false
@@ -16,33 +14,46 @@ define("Conductor",["Config"],function(Config){
 				if (sprite == otherSprite){
 					continue
 				}
-				if (sprite.extrema.maxX <= otherSprite.extrema.maxX && sprite.extrema.maxX >= otherSprite.extrema.minX){
+				if (restrictFunction != null){
+					if (restrictFunction(otherSprite)==true){
+						continue
+					}
+				}
+				if (sprite.extrema.maxX+modMaxX <= otherSprite.extrema.maxX && sprite.extrema.maxX+modMaxX >= otherSprite.extrema.minX){
 					xBad = true
 				}
-				if (sprite.extrema.minX <= otherSprite.extrema.maxX && sprite.extrema.minX >= otherSprite.extrema.minX){
+				if (sprite.extrema.minX-modMinX <= otherSprite.extrema.maxX && sprite.extrema.minX-modMinX >= otherSprite.extrema.minX){
 					xBad = true
 				}
-				if (sprite.extrema.minX <= otherSprite.extrema.minX && sprite.extrema.maxX >= otherSprite.extrema.maxX){
+				if (sprite.extrema.minX-modMinX <= otherSprite.extrema.minX && sprite.extrema.maxX+modMaxX >= otherSprite.extrema.maxX){
 					xBad = true
 				}
-				if (sprite.extrema.maxY <= otherSprite.extrema.maxY && sprite.extrema.maxY >= otherSprite.extrema.minY){
+				if (sprite.extrema.maxY+modMaxY <= otherSprite.extrema.maxY && sprite.extrema.maxY+modMaxY >= otherSprite.extrema.minY){
 					yBad = true
 				}
-				if (sprite.extrema.minY <= otherSprite.extrema.maxY && sprite.extrema.minY >= otherSprite.extrema.minY){
+				if (sprite.extrema.minY-modMinY <= otherSprite.extrema.maxY && sprite.extrema.minY-modMinY >= otherSprite.extrema.minY){
 					yBad = true
 				}
-				if (sprite.extrema.minY <= otherSprite.extrema.minY && sprite.extrema.maxY >= otherSprite.extrema.maxY){
+				if (sprite.extrema.minY-modMinY <= otherSprite.extrema.minY && sprite.extrema.maxY+modMaxY >= otherSprite.extrema.maxY){
 					yBad = true
 				}
 				if (xBad == true && yBad == true){
 					if (Config.debug==true){
-						console.log("Sprite: ",sprite.extrema.minX,sprite.extrema.maxX,sprite.extrema.minY,sprite.extrema.maxY)
+						console.log("Sprite: ",sprite.extrema.minX-modMinX,sprite.extrema.maxX+modMaxX,sprite.extrema.minY-modMinY,sprite.extrema.maxY+modMaxY)
 						console.log("OtherSprite: ",otherSprite.extrema.minX,otherSprite.extrema.maxX,otherSprite.extrema.minY,otherSprite.extrema.maxY)
 					}
 					return true
 				}
 			}
 			return false
+		},
+		hasPlayerNear: function(sprite,modMaxX,modMaxY,modMinX,modMinY){
+			return this.hasNear(sprite,function(otherSprite){
+				return !otherSprite.isPlayer
+			},modMaxX,modMaxY,modMinX,modMinY)
+		},
+		hasCollision: function(sprite){
+			return this.hasNear(sprite,null,0,0,0,0)
 		},
 		//Should fix this to wait until all assets are loaded...
 		renderAllSprites: function(){

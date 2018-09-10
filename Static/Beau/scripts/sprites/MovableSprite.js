@@ -17,8 +17,7 @@ define("sprites/MovableSprite",["sprites/Sprite","Conductor", "Config"],function
 			clearInterval(this.movement[dir])
 		}
 		setFacing(dir){
-			this.spriteSheet.prevRow = this.spriteSheet.row
-			this.spriteSheet.row = this.spriteSheet.facingList[dir]
+			this.spriteSheet.setRowByKey(dir)
 		}
 		move(dir,mod){
 			var revert = {xOld:this.x,yOld:this.y}
@@ -41,25 +40,25 @@ define("sprites/MovableSprite",["sprites/Sprite","Conductor", "Config"],function
 		}
 		//These two are the same for now...
 		_moveWithoutFacing(dir,mod){
-			if (dir==this.spriteSheet.facingDict[0]){
+			if (dir==this.spriteSheet.getKeyByRow(0)){
 				var y = this.y+mod
 				if ( y < Config.bgHeight ){
 					this._setYPos(y)
 				}
 			}
-			else if (dir==this.spriteSheet.facingDict[1]){
+			else if (dir==this.spriteSheet.getKeyByRow(1)){
 				var y = this.y-mod
 				if ( y > 0 ){
 					this._setYPos(y)
 				}
 			}
-			else if (dir==this.spriteSheet.facingDict[2]){
+			else if (dir==this.spriteSheet.getKeyByRow(2)){
 				var x = this.x-mod
 				if (x > 0){
 					this._setXPos(x)
 				}
 			}
-			else if (dir==this.spriteSheet.facingDict[3]){
+			else if (dir==this.spriteSheet.getKeyByRow(3)){
 				var x = this.x+mod
 				if (x < Config.bgWidth){
 					this._setXPos(x)
@@ -67,30 +66,7 @@ define("sprites/MovableSprite",["sprites/Sprite","Conductor", "Config"],function
 			}
 		}
 		_moveWithFacing(dir,mod){
-			if (dir==this.spriteSheet.facingDict[0]){
-				var y = this.y+mod
-				if ( y < Config.bgHeight ){
-					this._setYPos(y)
-				}
-			}
-			else if (dir==this.spriteSheet.facingDict[1]){
-				var y = this.y-mod
-				if ( y > 0 ){
-					this._setYPos(y)
-				}
-			}
-			else if (dir==this.spriteSheet.facingDict[2]){
-				var x = this.x-mod
-				if (x > 0){
-					this._setXPos(x)
-				}
-			}
-			else if (dir==this.spriteSheet.facingDict[3]){
-				var x = this.x+mod
-				if (x < Config.bgWidth){
-					this._setXPos(x)
-				}
-			}
+			this._moveWithoutFacing(dir,mod)
 		}
 		_handleKeyPress(){
 			var me = this
@@ -98,7 +74,7 @@ define("sprites/MovableSprite",["sprites/Sprite","Conductor", "Config"],function
 			me.keySet = new Set()
 			$(document).keydown(function(event){
 				var key = String.fromCharCode(event.which)
-				if (key in me.spriteSheet.facingList){
+				if (me.spriteSheet.hasKey(key)){
 					if (!me.keySet.has(key)){
 						me.keySet.add(key)
 						me.setFacing(key)
@@ -114,7 +90,7 @@ define("sprites/MovableSprite",["sprites/Sprite","Conductor", "Config"],function
 			})
 			$(document).keyup(function(event){
 				var key = String.fromCharCode(event.which)
-				if (key in me.spriteSheet.facingList){
+				if (me.spriteSheet.hasKey(key)){
 					if (me.keySet.has(key)){
 						
 						me.stopAnimate()
