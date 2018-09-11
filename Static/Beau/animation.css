@@ -1,0 +1,11 @@
+body{
+	/*
+	background: url("backgrounds/forest.png");
+	*/
+}
+#sprite-container-1{
+	position:absolute;
+}
+#sprite-container-2{
+	position:absolute;
+}
