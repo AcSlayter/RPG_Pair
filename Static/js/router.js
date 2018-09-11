@@ -1,6 +1,6 @@
 // Filename: router.js
 
-define(['jquery','helpers/KeyPress'], function($,KeyPress){
+define(['jquery'], function($){
 
   var initialize = function(){
         console.log("Enter Router.js");
@@ -10,6 +10,7 @@ define(['jquery','helpers/KeyPress'], function($,KeyPress){
 
         switch(current_page){
             case "/" :
+                requirejs(['helpers/KeyPress']);
                 console.log("something");
                 break;
             case "/index.html" :
