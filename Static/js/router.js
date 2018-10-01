@@ -14,7 +14,11 @@ define(['jquery'], function($){
                 console.log("something");
                 break;
             case "/index.html" :
-                console.log("something 2 ");
+                console.log("index 2 ");
+                break;
+            case "/pages/map.html" :
+                console.log("map");
+                requirejs(['pages/map']);
                 break;
             default:
                 console.log("fail");

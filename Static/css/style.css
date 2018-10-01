@@ -5,3 +5,14 @@
     min-width: 300px;
     overflow: auto;
 }
+
+.square {
+    width: 70px;
+    height: 70px;
+    border: 1px solid black;
+    float: left;
+}
+
+.row {
+    overflow: auto;
+}
