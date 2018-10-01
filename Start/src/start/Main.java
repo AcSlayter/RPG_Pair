@@ -1,5 +1,6 @@
 package start;
 
+import com.ApiAssigner;
 import com.WebServer;
 
 public class Main {
@@ -7,7 +8,7 @@ public class Main {
         System.out.println("Type : kill");
         System.out.println("Then refresh");
 
-        Thread webServerTHREAD = new Thread(new WebServer(8080,"Static"), "Thread 1");
+        Thread webServerTHREAD = new Thread(new WebServer(8080,"Static" , new ApiAssigner()), "Thread 1");
 
         webServerTHREAD.start();
 
