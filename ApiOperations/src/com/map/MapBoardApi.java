@@ -19,7 +19,7 @@ public class MapBoardApi implements IApi {
 
         URL myURL = null;
         try {
-            myURL = new URL("http://192.168.86.127:8090/"+ subArray);
+            myURL = new URL("http://localhost:8090/"+ subArray);
             URLConnection myURLConnection = myURL.openConnection();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(myURLConnection.getInputStream()));
             String getResponse = bufferedReader.readLine();

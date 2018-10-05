@@ -13,3 +13,6 @@ ErrorOccurred=com.exception.ReadFileException: File not Available, startingPoint
 ErrorOccurred=com.exception.ReadFileException: File not Available, startingPoint=com.FileSystemFile.readAllBytes(FileSystemFile.java:30), additionalInfo=/pages/js/main.js, remoteSocket=/0:0:0:0:0:0:0:1:57145
 ErrorOccurred=com.exception.ReadFileException: File not Available, startingPoint=com.FileSystemFile.readAllBytes(FileSystemFile.java:30), additionalInfo=/pages/js/main.js, remoteSocket=/0:0:0:0:0:0:0:1:57258
 ErrorOccurred=com.exception.ReadFileException: File not Available, startingPoint=com.FileSystemFile.readAllBytes(FileSystemFile.java:30), additionalInfo=/pages/js/main.js, remoteSocket=/0:0:0:0:0:0:0:1:57274
+ErrorOccurred=com.error.InvalidApiRequestException, startingPoint=com.map.MapBoardApi.getByteResponse(MapBoardApi.java:35), additionalInfo=/api/mapBoard/test?_=1538454288403, remoteSocket=/0:0:0:0:0:0:0:1:58856
+ErrorOccurred=com.exception.ReadFileException: File not Available, startingPoint=com.FileSystemFile.readAllBytes(FileSystemFile.java:30), additionalInfo=/pages/maps.html, remoteSocket=/0:0:0:0:0:0:0:1:60029
+ErrorOccurred=com.exception.ReadFileException: File not Available, startingPoint=com.FileSystemFile.readAllBytes(FileSystemFile.java:30), additionalInfo=/favicon.ico, remoteSocket=/0:0:0:0:0:0:0:1:60030
