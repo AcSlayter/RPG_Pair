@@ -7,8 +7,6 @@ define("sprites/Sprite",["sprites/Spritesheet","Config"],function(Spritesheet, C
 		//isLoaded
 		//x
 		//y
-		//width
-		//height
 		//frameRate
 		//InteractionComponent
 		//extrema
@@ -42,12 +40,10 @@ define("sprites/Sprite",["sprites/Spritesheet","Config"],function(Spritesheet, C
 				this.outline.style.position = "fixed";
 				this.outline.style.border = "3px solid black";
 				this.outline.zIndex = "9999";
+				this.container.appendChild(this.outline);
 				
 			}
 			this._calcExtrema();
-			if (Config.debug==true){
-				this.container.appendChild(this.outline);
-			}
 
 			this.frameRate = Config.frameRate;
 		}

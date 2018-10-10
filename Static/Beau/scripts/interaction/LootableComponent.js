@@ -1,6 +1,6 @@
-define("interaction/LootableComponent",["interaction/InteractionComponent","Conductor"],function(InteractionComponent,Conductor){
+define("interaction/LootableComponent",["interaction/IInteractable","Conductor"],function(IInteractable,Conductor){
 	
-	return class LootableComponent extends InteractionComponent{
+	return class LootableComponent extends IInteractable{
 		constructor(sprite, key){
 			super(sprite,key)
 			this._handleKeyPress()

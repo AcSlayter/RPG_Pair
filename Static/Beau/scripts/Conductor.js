@@ -12,7 +12,10 @@ define("Conductor",["Config"],function(Config){
 				var yBad = false
 				otherSprite = sprites[i]
 				if (sprite == otherSprite){
-					continue
+					continue;
+				}
+				if (otherSprite.collision == false){
+					continue;
 				}
 				if (restrictFunction != null){
 					if (restrictFunction(otherSprite)==true){

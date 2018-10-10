@@ -1,4 +1,4 @@
-define("interaction/InteractionComponent",function(){
+define("interaction/IInteractable",function(){
 	
 	return class InteractionComponent{
 		constructor(sprite, key){

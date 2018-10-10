@@ -1,78 +1,36 @@
 define("sprites/Spritesheet",["Config"],function(Config){
 	class Spritesheet{
-		
-		
-		/**
-		 * Responsible for controlling where in spritesheet sprite should render.<br>
-		 * Currently, constructor serves as the factory for producing various types of sprites.<br>
-	 	 * Sprite is tightly coupled to this.<br>
-	 	 * TODO - move factory elsewhere<br>
-		 * TODO - move load functions/enum into YAML format and abstract away the need to code
-		 * @param {string} spriteSheetToLoad - enum of spritesheet you want to load. 
-		 */
+
 		constructor(spriteSheetToLoad){
-			
-			/**@readonly
-			 * @member  {Object} Spritesheet#image*/
+
 			this.image;
-			
-			/**@private
-			 * @member {Boolean} Spritesheet#hasFacing */
+
 			this.hasFacing;
-			
-			/**@readonly
-			 * @member {Integer} Spritesheet#row
-			 * row of spritesheet sprite is on */
+
 			this.row;
-			
-			/**@readonly
-			 * @member {Integer} Spritesheet#frameWidth*/
+
 			this.frameWidth;
-			
-			/** @readonly
-			 * @member {Integer} Spritesheet#frameHeight*/
+
 			this.frameHeight;
-			
-			/**@readonly
-			 * @member {Integer} Spritesheet#frameIndex*/
+
 			this.frameIndex;
-			
-			/**@private
-			 * @member {Integer} Spritesheet#frameLimit*/
+
 			this.frameLimit;
 			
-			/**@private
-			 * @member {Array} Spritesheet#frameMap */
 			this.frameMap;
-			
-			/** @private
-			 * @member {Integer} Spritesheet#frameMapIndex*/
+
 			this.frameMapIndex;
-			
-			/**@readonly
-			 * @member {Integer} Spritesheet#collisionModX*/
+
 			this.collisionModX;
-			
-			/**@readonly
-			 * @member {Integer} Spritesheet#collisionModY*/
+
 			this.collisionModY;
-			
-			/**@readonly 
-			 * @member {Integer} Spritesheet#collisionWidth*/
+
 			this.collisionWidth;
-			
-			/**@readonly 
-			 * @member {Integer} Spritesheet#collisionHeight */
+
 			this.collisionHeight;
-			
-			/** @readonly
-			 * @member {Dictionary} Spritesheet#rowKeyDict
-			 * Maps the spritesheet row to a key (for player controlled sprites)*/
+
 			this.rowKeyDict;
-			
-			/**@readonly
-			 * @member {Dictionary} Spritesheet#keyRowDict
-			 * Maps the spritesheet key to a row (for player controlled sprites) */
+
 			this.keyRowDict;
 			
 			
@@ -101,6 +59,10 @@ define("sprites/Spritesheet",["Config"],function(Config){
 				this.frameMap = []
 				this.frameMap[0] = {row:0,col:0}
 				this.frameMap[1]= {row:1,col:1}
+				
+			}
+			if (spriteSheetToLoad == "dialogue1"){
+				this.dialogue1()
 				
 			}
 			this.frameMapIndex = 0
@@ -149,29 +111,26 @@ define("sprites/Spritesheet",["Config"],function(Config){
 			this.collisionWidth = 50
 			this.collisionHeight = 25
 		}
-		speech1(){
+		dialogue1(){
 			this.image = new Image()
-			this.image.src = "misc/speech-bubble.png"
+			this.image.src = Config.spritesheetFilePath+"Misc/speech-bubble.png"
 			this.hasFacing = false
 			this.row = 0
-			this.frameWidth = 500
-			this.frameHeight = 500
+			this.frameWidth = 130
+			this.frameHeight = 110
 			this.frameIndex = 0
-			this.frameLimit = 2
+			this.frameLimit = 0
 			this.collisionModX = 4
 			this.collisionModY=-18
 			this.collisionWidth = 50
 			this.collisionHeight = 25
 		}
-		/** @function Spritesheet#setRowByKey */
 		setRowByKey(key){
 			this.row = this.keyRowDict[key]
 		}
-		/**@function Spritesheet#setRowByKey*/
 		getKeyByRow(row){
 			return this.rowKeyDict[row]
 		}
-		/** @function Spritesheet#hasKey */
 		hasKey(key){
 			if (key in this.keyRowDict){
 				return true
@@ -180,14 +139,12 @@ define("sprites/Spritesheet",["Config"],function(Config){
 				return false
 			}
 		}
-		/** @function Spritesheet#checkResetFrame*/
 		checkResetFrame(){
 			if (this.frameMapIndex==this.frameLimit){
 				this.frameIndex = 0
 				this.frameMapIndex=0
 			}
 		}
-		/** @function Spritesheet#iterateFrame */
 		iterateFrame(){
 			this.frameMapIndex++
 			if (this.frameMap==null){
